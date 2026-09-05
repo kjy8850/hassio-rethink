@@ -11,8 +11,8 @@ RUN git clone https://github.com/kjy8850/rethink /app && \
     # Pin to a specific commit so this layer only rebuilds when intentionally bumped
     # (plain `git clone` with no ref made Docker's cache silently keep serving an old
     # checkout on rebuild even after new commits landed upstream).
-    # ec08dce: restrict CST_570004_WW climate modes (drop unsupported heat)
-    git checkout ec08dce && \
+    # 7d77900: reapply "fix: don't force initDevice re-registration; issue per-SNI certs for MQTTS"
+    git checkout 7d77900 && \
     # PR #84: remove hardcoded pathname='/' so WebSocket and fetch calls use the
     # correct base path when served through a reverse proxy (e.g. HA ingress).
     # https://github.com/anszom/rethink/pull/84
