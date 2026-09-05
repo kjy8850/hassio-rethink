@@ -11,9 +11,10 @@ RUN git clone https://github.com/kjy8850/rethink /app && \
     # Pin to a specific commit so this layer only rebuilds when intentionally bumped
     # (plain `git clone` with no ref made Docker's cache silently keep serving an old
     # checkout on rebuild even after new commits landed upstream).
-    # b8953d9: ignore resultCode '0005' (WashTower dual-registration, community fix by
-    # asata, see anszom/rethink#79) on top of a0cb4a6 (dryer model alias + H07 field mapping)
-    git checkout b8953d9 && \
+    # 28a3163: filter sensors for mFilter AC units from TLV 0x355/0x356, on top of b8953d9
+    # (ignore resultCode '0005' WashTower dual-registration, community fix by asata, see
+    # anszom/rethink#79) and a0cb4a6 (dryer model alias + H07 field mapping)
+    git checkout 28a3163 && \
     # PR #84: remove hardcoded pathname='/' so WebSocket and fetch calls use the
     # correct base path when served through a reverse proxy (e.g. HA ingress).
     # https://github.com/anszom/rethink/pull/84
