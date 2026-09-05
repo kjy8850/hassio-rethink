@@ -11,10 +11,9 @@ RUN git clone https://github.com/kjy8850/rethink /app && \
     # Pin to a specific commit so this layer only rebuilds when intentionally bumped
     # (plain `git clone` with no ref made Docker's cache silently keep serving an old
     # checkout on rebuild even after new commits landed upstream).
-    # a0cb4a6: merge WashTower dryer model alias (BDH_D39302_KR->BDH_D39301_KR) +
-    # H07 dishwasher settings field mapping (rinse/softening/buzzer/time/end-alarm/
-    # auto-select/wash-complete-light/brightness), write commands still guarded off
-    git checkout a0cb4a6 && \
+    # b8953d9: ignore resultCode '0005' (WashTower dual-registration, community fix by
+    # asata, see anszom/rethink#79) on top of a0cb4a6 (dryer model alias + H07 field mapping)
+    git checkout b8953d9 && \
     # PR #84: remove hardcoded pathname='/' so WebSocket and fetch calls use the
     # correct base path when served through a reverse proxy (e.g. HA ingress).
     # https://github.com/anszom/rethink/pull/84
