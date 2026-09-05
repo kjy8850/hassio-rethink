@@ -8,6 +8,11 @@ RUN apk add --no-cache git openssl jq bash
 # - PR #139 (H11 Dishwasher)
 RUN git clone https://github.com/kjy8850/rethink /app && \
     cd /app && \
+    # Pin to a specific commit so this layer only rebuilds when intentionally bumped
+    # (plain `git clone` with no ref made Docker's cache silently keep serving an old
+    # checkout on rebuild even after new commits landed upstream).
+    # ec08dce: restrict CST_570004_WW climate modes (drop unsupported heat)
+    git checkout ec08dce && \
     # PR #84: remove hardcoded pathname='/' so WebSocket and fetch calls use the
     # correct base path when served through a reverse proxy (e.g. HA ingress).
     # https://github.com/anszom/rethink/pull/84
