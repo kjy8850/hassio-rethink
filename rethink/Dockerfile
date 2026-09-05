@@ -11,8 +11,8 @@ RUN git clone https://github.com/kjy8850/rethink /app && \
     # Pin to a specific commit so this layer only rebuilds when intentionally bumped
     # (plain `git clone` with no ref made Docker's cache silently keep serving an old
     # checkout on rebuild even after new commits landed upstream).
-    # ad0a9b8: fix(bridge): preserve device alias on re-registration, restore 2026-09-05 incident names
-    git checkout ad0a9b8 && \
+    # b4138d2: feat(devices): add H07 dishwasher diagnostic stub (frame_kind/raw_frame sensors)
+    git checkout b4138d2 && \
     # PR #84: remove hardcoded pathname='/' so WebSocket and fetch calls use the
     # correct base path when served through a reverse proxy (e.g. HA ingress).
     # https://github.com/anszom/rethink/pull/84
