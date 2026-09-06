@@ -11,10 +11,11 @@ RUN git clone https://github.com/kjy8850/rethink /app && \
     # Pin to a specific commit so this layer only rebuilds when intentionally bumped
     # (plain `git clone` with no ref made Docker's cache silently keep serving an old
     # checkout on rebuild even after new commits landed upstream).
-    # 4262d97: allowlist forces removal even when the appliance IS registered (1ca7c1e
-    # gated on removeFirst, which is only set when there is nothing to remove)
-    # (Bridge.removalAllowlist) -- one measured retry of the remove-then-add path that
-    # asata's fork uses, with the 4 cassettes and the dishwasher left on the safe path.
+    # 8486af0: remove-then-add for the WashTower pair only. Removes an appliance that is both
+    # listed in the home and on Bridge.removalAllowlist (세탁기 + 건조기, nothing else), so the
+    # same build also covers the case where the owner deleted it in the ThinQ app first --
+    # the removal is then simply skipped. Pins the 세탁기/워시타워 aliases so the re-add
+    # cannot rename them to "Rethink xxxxxxxx", and logs the body that comes with '0005'.
     # On top of 90b037b: merge of upstream PR #107 (real deploy info forwarded upstream,
     # advertise_requested_host, util/pki+sni), on top of 605f493 (bridge never removes an
     # appliance from the home -- the conditional removal still
@@ -22,7 +23,7 @@ RUN git clone https://github.com/kjy8850/rethink /app && \
     # 28a3163 (mFilter AC filter sensors from TLV 0x355/0x356) and b8953d9
     # (ignore resultCode '0005' WashTower dual-registration, community fix by asata, see
     # anszom/rethink#79) and a0cb4a6 (dryer model alias + H07 field mapping)
-    git checkout 4262d97 && \
+    git checkout 8486af0 && \
     # PR #84: remove hardcoded pathname='/' so WebSocket and fetch calls use the
     # correct base path when served through a reverse proxy (e.g. HA ingress).
     # https://github.com/anszom/rethink/pull/84
