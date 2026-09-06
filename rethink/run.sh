@@ -32,7 +32,7 @@ cat > "$CONFIG" <<EOF
   "bridge": {
     "storage_path": "/data/state"
   },
-  "log": ["status", "incoming", "HTTPS", "publish", "MGMT"]
+  "log": ["status", "incoming", "HTTPS", "publish", "MGMT", "bridge"]
 }
 EOF
 
