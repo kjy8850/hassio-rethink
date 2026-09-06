@@ -11,7 +11,8 @@ RUN git clone https://github.com/kjy8850/rethink /app && \
     # Pin to a specific commit so this layer only rebuilds when intentionally bumped
     # (plain `git clone` with no ref made Docker's cache silently keep serving an old
     # checkout on rebuild even after new commits landed upstream).
-    # 1ca7c1e: honour registrationPlan's removeFirst for the WashTower pair only
+    # 4262d97: allowlist forces removal even when the appliance IS registered (1ca7c1e
+    # gated on removeFirst, which is only set when there is nothing to remove)
     # (Bridge.removalAllowlist) -- one measured retry of the remove-then-add path that
     # asata's fork uses, with the 4 cassettes and the dishwasher left on the safe path.
     # On top of 90b037b: merge of upstream PR #107 (real deploy info forwarded upstream,
@@ -21,7 +22,7 @@ RUN git clone https://github.com/kjy8850/rethink /app && \
     # 28a3163 (mFilter AC filter sensors from TLV 0x355/0x356) and b8953d9
     # (ignore resultCode '0005' WashTower dual-registration, community fix by asata, see
     # anszom/rethink#79) and a0cb4a6 (dryer model alias + H07 field mapping)
-    git checkout 1ca7c1e && \
+    git checkout 4262d97 && \
     # PR #84: remove hardcoded pathname='/' so WebSocket and fetch calls use the
     # correct base path when served through a reverse proxy (e.g. HA ingress).
     # https://github.com/anszom/rethink/pull/84
