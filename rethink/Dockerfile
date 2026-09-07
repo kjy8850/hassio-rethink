@@ -11,11 +11,11 @@ RUN git clone https://github.com/kjy8850/rethink /app && \
     # Pin to a specific commit so this layer only rebuilds when intentionally bumped
     # (plain `git clone` with no ref made Docker's cache silently keep serving an old
     # checkout on rebuild even after new commits landed upstream).
-    # 790793f: registers a WashTower as one combined product. Static analysis of the ThinQ
-    # app shows its RegisterDeviceRequestBody carries a nested subDevice; rethink never sent
-    # one, which is what the undocumented '0005' refuses (anszom/rethink#79). Adds
-    # POST /bridge/combined/:masterId/:slaveId plus the read-only /bridge/inspect and
-    # /bridge/thinq?path=... views used to work this out.
+    # 03ea5eb: registers a WashTower through the combined-product endpoint --
+    # POST service/homes/{homeId}/devices/kepler with { registrationType, item: [...] } --
+    # which is what the undocumented '0005' was refusing all along (anszom/rethink#79).
+    # Verified against the cloud: the group registers and RFC003 clears. Also keeps the
+    # read-only /bridge/inspect and /bridge/thinq?path=... views used to work this out.
     # On top of 9d32244: rethink never removes an appliance from the LG home.
     # On top of 90b037b: merge of upstream PR #107 (real deploy info forwarded upstream,
     # advertise_requested_host, util/pki+sni), on top of 605f493 (bridge never removes an
@@ -24,7 +24,7 @@ RUN git clone https://github.com/kjy8850/rethink /app && \
     # 28a3163 (mFilter AC filter sensors from TLV 0x355/0x356) and b8953d9
     # (ignore resultCode '0005' WashTower dual-registration, community fix by asata, see
     # anszom/rethink#79) and a0cb4a6 (dryer model alias + H07 field mapping)
-    git checkout 2ccb506 && \
+    git checkout 03ea5eb && \
     # PR #84: remove hardcoded pathname='/' so WebSocket and fetch calls use the
     # correct base path when served through a reverse proxy (e.g. HA ingress).
     # https://github.com/anszom/rethink/pull/84
