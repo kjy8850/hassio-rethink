@@ -11,10 +11,10 @@ RUN git clone https://github.com/kjy8850/rethink /app && \
     # Pin to a specific commit so this layer only rebuilds when intentionally bumped
     # (plain `git clone` with no ref made Docker's cache silently keep serving an old
     # checkout on rebuild even after new commits landed upstream).
-    # 9d32244: rethink never removes an appliance from the LG home. The remove-then-add
-    # experiment is done -- addDevice answers '0005' for both WashTower units whether or not
-    # the home lists them, and deleting is what breaks the 1+1 pair group (anszom/rethink#79).
-    # Keeps resolveAlias + the pinned 세탁기/워시타워 names, and the '0005' body logging.
+    # 419695e: adds read-only GET /bridge/inspect and /bridge/inspect/:deviceId, which return
+    # the ThinQ home record and a single device record. addDevice answers '0005' with an empty
+    # body for a WashTower, so what the cloud already stores is the only evidence left to read.
+    # On top of 9d32244: rethink never removes an appliance from the LG home.
     # On top of 90b037b: merge of upstream PR #107 (real deploy info forwarded upstream,
     # advertise_requested_host, util/pki+sni), on top of 605f493 (bridge never removes an
     # appliance from the home -- the conditional removal still
@@ -22,7 +22,7 @@ RUN git clone https://github.com/kjy8850/rethink /app && \
     # 28a3163 (mFilter AC filter sensors from TLV 0x355/0x356) and b8953d9
     # (ignore resultCode '0005' WashTower dual-registration, community fix by asata, see
     # anszom/rethink#79) and a0cb4a6 (dryer model alias + H07 field mapping)
-    git checkout 9d32244 && \
+    git checkout 419695e && \
     # PR #84: remove hardcoded pathname='/' so WebSocket and fetch calls use the
     # correct base path when served through a reverse proxy (e.g. HA ingress).
     # https://github.com/anszom/rethink/pull/84
