@@ -24,7 +24,7 @@ RUN git clone https://github.com/kjy8850/rethink /app && \
     # 28a3163 (mFilter AC filter sensors from TLV 0x355/0x356) and b8953d9
     # (ignore resultCode '0005' WashTower dual-registration, community fix by asata, see
     # anszom/rethink#79) and a0cb4a6 (dryer model alias + H07 field mapping)
-    git checkout cf043a2 && \
+    git checkout 2ccb506 && \
     # PR #84: remove hardcoded pathname='/' so WebSocket and fetch calls use the
     # correct base path when served through a reverse proxy (e.g. HA ingress).
     # https://github.com/anszom/rethink/pull/84
