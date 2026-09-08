@@ -30,7 +30,10 @@ RUN git clone https://github.com/kjy8850/rethink /app && \
     # own bytes, not guesses. Also maps process, both time pairs and the delay-start
     # countdown out of the status record.
     # 4acae89: an empty course byte reads as NONE instead of UNKNOWN(0).
-    git checkout 4acae89 && \
+    # e10266f: downloaded courses are picked by slot (opt4 bits 5-6) and opt3 0x80 is steam,
+    # not a download flag -- the shipped 1.0.33/34 forced steam on for any download cycle.
+    # Adds the F0 25 slot-write command and exposes the three slots from the status record.
+    git checkout e10266f && \
     # PR #84: remove hardcoded pathname='/' so WebSocket and fetch calls use the
     # correct base path when served through a reverse proxy (e.g. HA ingress).
     # https://github.com/anszom/rethink/pull/84
