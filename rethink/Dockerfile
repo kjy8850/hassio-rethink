@@ -29,7 +29,8 @@ RUN git clone https://github.com/kjy8850/rethink /app && \
     # log direction), so start/pause/resume/cancel/power and the settings frame are LG's
     # own bytes, not guesses. Also maps process, both time pairs and the delay-start
     # countdown out of the status record.
-    git checkout 1975ab1 && \
+    # 4acae89: an empty course byte reads as NONE instead of UNKNOWN(0).
+    git checkout 4acae89 && \
     # PR #84: remove hardcoded pathname='/' so WebSocket and fetch calls use the
     # correct base path when served through a reverse proxy (e.g. HA ingress).
     # https://github.com/anszom/rethink/pull/84
