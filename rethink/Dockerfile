@@ -35,7 +35,9 @@ RUN git clone https://github.com/kjy8850/rethink /app && \
     # Adds the F0 25 slot-write command and exposes the three slots from the status record.
     # 12cf0d2: seed the pending course/options from the appliance on restart instead of
     # snapping back to AUTO with everything off.
-    git checkout 12cf0d2 && \
+    # 6565def: the download frame leads with a constant 0x03 (courseDownloadType), not the
+    # slot -- slots 1 and 2 were silently ignored by the appliance until this.
+    git checkout 6565def && \
     # PR #84: remove hardcoded pathname='/' so WebSocket and fetch calls use the
     # correct base path when served through a reverse proxy (e.g. HA ingress).
     # https://github.com/anszom/rethink/pull/84
