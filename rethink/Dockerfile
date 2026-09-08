@@ -33,7 +33,9 @@ RUN git clone https://github.com/kjy8850/rethink /app && \
     # e10266f: downloaded courses are picked by slot (opt4 bits 5-6) and opt3 0x80 is steam,
     # not a download flag -- the shipped 1.0.33/34 forced steam on for any download cycle.
     # Adds the F0 25 slot-write command and exposes the three slots from the status record.
-    git checkout e10266f && \
+    # 12cf0d2: seed the pending course/options from the appliance on restart instead of
+    # snapping back to AUTO with everything off.
+    git checkout 12cf0d2 && \
     # PR #84: remove hardcoded pathname='/' so WebSocket and fetch calls use the
     # correct base path when served through a reverse proxy (e.g. HA ingress).
     # https://github.com/anszom/rethink/pull/84
