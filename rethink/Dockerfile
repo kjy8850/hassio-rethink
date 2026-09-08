@@ -24,7 +24,12 @@ RUN git clone https://github.com/kjy8850/rethink /app && \
     # 28a3163 (mFilter AC filter sensors from TLV 0x355/0x356) and b8953d9
     # (ignore resultCode '0005' WashTower dual-registration, community fix by asata, see
     # anszom/rethink#79) and a0cb4a6 (dryer model alias + H07 field mapping)
-    git checkout a1d1111 && \
+    # 1975ab1: H07 dishwasher write support. The command opcodes were captured from the
+    # real LG ThinQ app driving the appliance through this bridge (the `bridge <id> <- ...`
+    # log direction), so start/pause/resume/cancel/power and the settings frame are LG's
+    # own bytes, not guesses. Also maps process, both time pairs and the delay-start
+    # countdown out of the status record.
+    git checkout 1975ab1 && \
     # PR #84: remove hardcoded pathname='/' so WebSocket and fetch calls use the
     # correct base path when served through a reverse proxy (e.g. HA ingress).
     # https://github.com/anszom/rethink/pull/84
